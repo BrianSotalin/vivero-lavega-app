@@ -30,3 +30,4 @@ class Plant {
     imageUrl: map['image_url'],
   );
 }
+

@@ -40,6 +40,46 @@ class _CustomerDetailModalState extends State<CustomerDetailModal> {
   }
 
   Future<void> _saveChanges() async {
+    if (_emailController.text.trim().isEmpty) {
+      showDialog(
+        context: context,
+        builder:
+            (_) => AlertDialog(
+              backgroundColor: Colors.white,
+              title: Center(
+                child: const Text(
+                  'Campo obligatorio!',
+                  style: TextStyle(color: Colors.redAccent),
+                ),
+              ),
+              content: const Text('El correo electrónico es obligatorio'),
+              actions: [
+                Center(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor:
+                          AppColors
+                              .textPrimary, // Cambia aquí el color de fondo
+                      foregroundColor: Colors.white, // Color del texto o íconos
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 12,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: const Text('OK'),
+                  ),
+                ),
+              ],
+            ),
+      );
+      setState(() => _isLoading = false);
+      return;
+    }
+
     setState(() => _isLoading = true);
     try {
       final updatedCustomer = Customer(

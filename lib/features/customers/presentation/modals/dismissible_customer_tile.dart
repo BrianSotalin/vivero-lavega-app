@@ -12,7 +12,7 @@ Widget buildDismissibleCustomerTile({
   required List<Customer> customerList,
   required VoidCallback onUpdated,
 }) {
-  final CustomerService _customerService = CustomerService();
+  final CustomerService customerService = CustomerService();
 
   return Dismissible(
     key: ValueKey(customer.id),
@@ -83,7 +83,7 @@ Widget buildDismissibleCustomerTile({
     },
     onDismissed: (_) async {
       try {
-        await _customerService.deleteCustomer(customer.id);
+        await customerService.deleteCustomer(customer.id);
 
         customerList.removeAt(index);
         onUpdated(); // actualiza el estado del widget padre

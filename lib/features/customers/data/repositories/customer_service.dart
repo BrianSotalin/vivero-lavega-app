@@ -17,6 +17,16 @@ class CustomerService {
   }
 
   Future<void> updateCustomer(Customer customer) async {
+    final Map<String, dynamic> updates = {
+      'first_name': customer.firstName,
+      'last_name': customer.lastName,
+      'phone': customer.phone,
+      'address': customer.address,
+    };
+
+    if (customer.email != null && customer.email!.isNotEmpty) {
+      updates['email'] = customer.email;
+    }
     final response =
         await Supabase.instance.client
             .schema('customers')
@@ -31,7 +41,7 @@ class CustomerService {
             .eq('id', customer.id)
             .select(); // Necesario para obtener respuesta completa
 
-    if (response == null || response.isEmpty) {
+    if ( response.isEmpty) {
       throw Exception('Error al actualizar el cliente');
     }
   }
@@ -50,7 +60,7 @@ class CustomerService {
             })
             .select();
 
-    if (response == null || response.isEmpty) {
+    if ( response.isEmpty) {
       throw Exception('Error al crear el cliente');
     }
   }
